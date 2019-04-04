@@ -28,7 +28,7 @@ namespace :pipenv do
     on fetch(:pipenv_servers) do
       within release_path do
         with fetch(:pipenv_env_variables) do
-          execute :pipenv, :clean, fetch(:pipenv_clean_options)
+          execute :pipenv, :uninstall, fetch(:pipenv_clean_options)
         end
       end
     end
