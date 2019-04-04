@@ -6,3 +6,6 @@ module Capistrano3
     # Your code goes here...
   end
 end
+
+require_relative 'pipenv/tasks'
+require_relative 'pipenv/hooks'

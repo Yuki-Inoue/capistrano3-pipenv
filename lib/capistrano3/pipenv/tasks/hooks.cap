@@ -1,0 +1,2 @@
+before 'deploy:updated', 'pipenv:install'
+before 'deploy:reverted', 'pipenv:install'

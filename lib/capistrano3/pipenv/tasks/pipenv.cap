@@ -1,0 +1,50 @@
+namespace :pipenv do
+  desc <<-DESC
+        Install the current Pipenv environment.
+
+        You can override any of these defaults by setting the variables shown below.
+
+          set :pipenv_roles, :all
+
+          set :pipenv_servers, -> { release_roles(fetch(:pipenv_roles)) }
+          set :pipenv_flags, '--deployment'
+          set :pipenv_env_variables, {}
+          set :pipenv_clean_options, ""
+    DESC
+  task :install do
+    on fetch(:pipenv_servers) do
+      within release_path do
+        with fetch(:pipenv_env_variables) do
+          options = []
+          if test(:pipenv, :check, *options)
+            info "The Pipfile's dependencies are satisfied, skipping installation"
+          else
+            options << "#{fetch(:pipenv_flags)}" if fetch(:pipenv_flags)
+            execute :pipenv, :install, *options
+          end
+        end
+      end
+    end
+  end
+
+  desc "Remove unused pips installed by pipenv"
+  task :clean do
+    on fetch(:pipenv_servers) do
+      within release_path do
+        with fetch(:pipenv_env_variables) do
+          execute :pipenv, :clean, fetch(:pipenv_clean_options)
+        end
+      end
+    end
+  end
+end
+
+namespace :load do
+  task :defaults do
+    set :pipenv_roles, :all
+    set :pipenv_servers, -> { release_roles(fetch(:pipenv_roles)) }
+    set :pipenv_flags, '--deployment'
+    set :pipenv_env_variables, {}
+    set :pipenv_clean_options, ""
+  end
+end
