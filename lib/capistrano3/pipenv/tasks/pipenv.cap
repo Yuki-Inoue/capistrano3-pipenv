@@ -7,7 +7,7 @@ namespace :pipenv do
           set :pipenv_roles, :all
 
           set :pipenv_servers, -> { release_roles(fetch(:pipenv_roles)) }
-          set :pipenv_flags, '--deployment'
+          set :pipenv_flags, '--deploy'
           set :pipenv_env_variables, {}
           set :pipenv_clean_options, ""
     DESC
@@ -39,7 +39,7 @@ namespace :load do
   task :defaults do
     set :pipenv_roles, :all
     set :pipenv_servers, -> { release_roles(fetch(:pipenv_roles)) }
-    set :pipenv_flags, '--deployment'
+    set :pipenv_flags, '--deploy'
     set :pipenv_env_variables, {}
     set :pipenv_clean_options, ""
   end
