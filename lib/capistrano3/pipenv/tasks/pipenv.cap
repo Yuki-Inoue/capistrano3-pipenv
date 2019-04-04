@@ -9,7 +9,7 @@ namespace :pipenv do
           set :pipenv_servers, -> { release_roles(fetch(:pipenv_roles)) }
           set :pipenv_flags, '--deploy'
           set :pipenv_env_variables, {}
-          set :pipenv_clean_options, ""
+          set :pipenv_clean_options, '--all'
     DESC
   task :install do
     on fetch(:pipenv_servers) do
@@ -41,6 +41,6 @@ namespace :load do
     set :pipenv_servers, -> { release_roles(fetch(:pipenv_roles)) }
     set :pipenv_flags, '--deploy'
     set :pipenv_env_variables, {}
-    set :pipenv_clean_options, ""
+    set :pipenv_clean_options, "--all"
   end
 end
