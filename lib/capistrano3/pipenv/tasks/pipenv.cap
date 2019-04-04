@@ -16,12 +16,8 @@ namespace :pipenv do
       within release_path do
         with fetch(:pipenv_env_variables) do
           options = []
-          if test(:pipenv, :check, *options)
-            info "The Pipfile's dependencies are satisfied, skipping installation"
-          else
-            options << "#{fetch(:pipenv_flags)}" if fetch(:pipenv_flags)
-            execute :pipenv, :install, *options
-          end
+          options << "#{fetch(:pipenv_flags)}" if fetch(:pipenv_flags)
+          execute :pipenv, :install, *options
         end
       end
     end
