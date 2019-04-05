@@ -30,6 +30,32 @@ The task will run before `deploy:updated` as part of Capistrano's default deploy
 
 When you require the `capistrano3/pyenv`, the `pipenv` commands will be prefixed by `pyenv exec`.
 
+Following are the default settings configurable in this gem.
+
+```ruby
+# for capistrano3/pipenv
+
+set :pipenv_roles, :all
+set :pipenv_servers, -> { release_roles(fetch(:pipenv_roles)) }
+set :pipenv_flags, '--deploy'
+set :pipenv_env_variables, {}
+set :pipenv_clean_options, '--all'
+
+# for capistrano3/pyenv
+set :pyenv_path, -> {
+  pyenv_path = fetch(:pyenv_custom_path)
+  pyenv_path ||
+    if fetch(:pyenv_type, :user) == :system
+      '/usr/local/pyenv'
+    else
+      '$HOME/.pyenv'
+    end
+}
+set :pyenv_roles, fetch(:pyenv_roles, :all)
+set :pyenv_python_dir, -> { "#{fetch(:pyenv_path)}/versions/#{fetch(:pyenv_python)}" }
+set :pyenv_map_bins, %w{pipenv}
+```
+
 ## Development
 
 In your project which uses capistrano (and this gem),
