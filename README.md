@@ -1,35 +1,44 @@
 # Capistrano3::Pipenv
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/capistrano3/pipenv`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Pipenv tasks for capistrano3.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'capistrano3-pipenv'
+group :development do
+  gem 'capistrano3-pipenv', require: false
+end
 ```
 
 And then execute:
 
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install capistrano3-pipenv
+    $ bundle install
 
 ## Usage
 
-TODO: Write usage instructions here
+Require in `Capfile` to use the default task:
+
+```ruby
+require 'capistrano3/pipenv'
+# If you are using pyenv
+require 'capistrano3/pyenv'
+```
+
+The task will run before `deploy:updated` as part of Capistrano's default deploy, or can be run in isolation with `cap production pipenv:install`.
+
+When you require the `capistrano3/pyenv`, the `pipenv` commands will be prefixed by `pyenv exec`.
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+In your project which uses capistrano (and this gem),
+you'd probably want to try something like
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+```
+gem 'capistrano3-pipenv', path: '/path/to/local/copy/of/this/repo'
+```
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/capistrano3-pipenv.
+Bug reports and pull requests are welcome on GitHub at https://github.com/Yuki-Inoue/capistrano3-pipenv .
