@@ -37,7 +37,7 @@ Following are the default settings configurable in this gem.
 
 set :pipenv_roles, :all
 set :pipenv_servers, -> { release_roles(fetch(:pipenv_roles)) }
-set :pipenv_flags, '--deploy'
+set :pipenv_flags, []
 set :pipenv_env_variables, {}
 set :pipenv_clean_options, '--all'
 
