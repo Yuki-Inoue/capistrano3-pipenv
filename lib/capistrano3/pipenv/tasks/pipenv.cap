@@ -1,3 +1,5 @@
+# -*- mode: ruby; -*-
+
 namespace :pipenv do
   desc <<-DESC
         Install the current Pipenv environment.
