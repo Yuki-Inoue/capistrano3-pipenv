@@ -9,7 +9,7 @@ namespace :pipenv do
           set :pipenv_roles, :all
 
           set :pipenv_servers, -> { release_roles(fetch(:pipenv_roles)) }
-          set :pipenv_flags, '--deploy'
+          set :pipenv_flags, []
           set :pipenv_env_variables, {}
           set :pipenv_clean_options, '--all'
     DESC
@@ -18,8 +18,8 @@ namespace :pipenv do
       within release_path do
         with fetch(:pipenv_env_variables) do
           options = []
-          options << "#{fetch(:pipenv_flags)}" if fetch(:pipenv_flags)
-          execute :pipenv, :install, *options
+          options << fetch(:pipenv_flags) unless fetch(:pipenv_flags).empty?
+          execute :pipenv, :sync, *options
         end
       end
     end
@@ -41,7 +41,7 @@ namespace :load do
   task :defaults do
     set :pipenv_roles, :all
     set :pipenv_servers, -> { release_roles(fetch(:pipenv_roles)) }
-    set :pipenv_flags, '--deploy'
+    set :pipenv_flags, []
     set :pipenv_env_variables, {}
     set :pipenv_clean_options, "--all"
   end
