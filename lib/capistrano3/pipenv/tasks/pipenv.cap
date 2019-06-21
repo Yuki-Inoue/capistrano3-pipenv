@@ -20,6 +20,9 @@ namespace :pipenv do
           options = []
           options << fetch(:pipenv_flags) unless fetch(:pipenv_flags).empty?
           execute :pipenv, :sync, *options
+          # it seems, we need to sync 2 times for making sure to install
+          # libraries from Pipenv.lock
+          execute :pipenv, :sync, *options
         end
       end
     end
